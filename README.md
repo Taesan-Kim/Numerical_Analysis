@@ -90,5 +90,5 @@ int main() {
 
 - Dept. of Mechanical and Control Engineering, Handong Global University
 - **Portfolio:** [taesankim.netlify.app](https://taesankim.netlify.app)
-- **GitHub:** [github.com/taesankim](https://github.com/taesankim)
+- **GitHub:** [github.com/Taesan-Kim](https://github.com/Taesan-Kim)
 - **Contact:** [taesan5435@gmail.com](mailto:taesan5435@gmail.com)
