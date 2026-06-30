@@ -534,30 +534,36 @@ void odeRK3(double y[], double odeFunc(const double t, const double y), const do
 	}
 }
 
-void odeRK4(double y[], double odeFunc(const double t, const double y), const double t0, const double tf, const double h, const double y_init)
+template<typename Func>
+void odeRK4(
+    std::vector<double>& y,
+    Func odeFunc,
+    double t0,
+    double tf,
+    double h,
+    double y0)
 {
-	int N = (tf - t0) / h + 1;
-	double K1, K2, K3, K4;
+    if (h <= 0.0 || tf < t0)
+        throw std::invalid_argument("Invalid integration interval.");
 
-	// Initial Condition
-	double ti = t0;
-	y[0] = y_init;
+    int N = static_cast<int>(std::round((tf - t0) / h)) + 1;
 
-	// RK4 ODE Solver
-	for (int i = 0; i < N - 1; i++)
-	{
-		// Gradients
-		K1 = odeFunc(ti, y[i]);
-		K2 = odeFunc(ti + h / 2, y[i] + h * K1 / 2);
-		K3 = odeFunc(ti + h / 2, y[i] + h * K2 / 2);
-		K4 = odeFunc(ti + h, y[i] + h * K3);
+    y.resize(N);
+    y[0] = y0;
 
-		// Update y(i+1)
-		y[i + 1] = y[i] + (h / 6) * (K1 + 2 * K2 + 2 * K3 + K4);
+    double t = t0;
 
-		// Update time
-		ti += h;
-	}
+    for (int i = 0; i < N - 1; ++i)
+    {
+        double K1 = odeFunc(t, y[i]);
+        double K2 = odeFunc(t + h * 0.5, y[i] + h * K1 * 0.5);
+        double K3 = odeFunc(t + h * 0.5, y[i] + h * K2 * 0.5);
+        double K4 = odeFunc(t + h,       y[i] + h * K3);
+
+        y[i + 1] = y[i] + (h / 6.0) * (K1 + 2.0 * K2 + 2.0 * K3 + K4);
+
+        t += h;
+    }
 }
 
 // ODE RK2 for 2nd order ODE
