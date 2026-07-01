@@ -570,7 +570,76 @@ void odeRK4(
 void sys2RK2(double y[], double v[], void odeFuncSys(double dYdt[], const double t, const double Y[]), const double t0, const double tf, const double h, const double y1_init, const double y2_init)
 {
 	//
-	// [BRIEF DESCRIPTION OF THE FUNCTION  GOES HERE]
+	//------------------------------------------------------------------------------
+	// Solve a second-order ordinary differential equation using the RK2 method.
+	//
+	// This solver assumes the second-order ODE has been converted into the following first-order system:
+	//
+	//      y' = v
+	//      v' = f(t, y, v)
+	//
+	// where
+	//      y : position (or state)
+	//      v : first derivative of y (velocity)
+	//
+	// Parameters
+	// ----------
+	// y :
+	//      Output array storing the solution y(t).
+	//
+	// v :
+	//      Output array storing the first derivative v(t).
+	//
+	// odeFuncSys :
+	//      User-defined function that computes the derivatives.
+	//
+	//      Function prototype:
+	//
+	//          void odeFuncSys(
+	//              double dYdt[],
+	//              const double t,
+	//              const double Y[]);	
+	//
+	//      Input:
+	//          t      - current time
+	//          Y[0]   - current y
+	//          Y[1]   - current v
+	//
+	//      Output:
+	//          dYdt[0] = dy/dt
+	//          dYdt[1] = dv/dt
+	//
+	// t0 :
+	//      Initial time.
+	//
+	// tf :
+	//      Final time.
+	//
+	// h :
+	//      Integration time step.
+	//
+	// y1_init :
+	//      Initial value of y.
+	//
+	// y2_init :
+	//      Initial value of v = dy/dt.
+	//
+	// Output
+	// ------
+	// The arrays y[] and v[] are filled with the numerical solution at every time step:
+	//
+	//      y[i] ≈ y(t_i)
+	//      v[i] ≈ y'(t_i)
+	//
+	// where
+	//
+	//      t_i = t0 + i*h
+	//
+	// Method
+	// ------
+	// Explicit Runge-Kutta 2nd Order (Heun's Method)
+	//
+	//------------------------------------------------------------------------------
 	//
 
 	// Variable Initialization
